@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BHAU</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Raleway:wght@200;300&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 100%; height: 100%;
+    background: #000007;
+    overflow: hidden;
+    cursor: crosshair;
+  }
+  canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+  }
+  .content {
+    position: fixed;
+    z-index: 2;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    text-align: center;
+    pointer-events: none;
+  }
+  .name {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(56px, 15vw, 120px);
+    color: #fff;
+    letter-spacing: 0.4em;
+    font-weight: 700;
+    line-height: 1;
+    text-shadow: 0 0 60px rgba(255,255,255,0.1);
+    animation: fadeUp 2s ease both;
+  }
+  .sub {
+    font-family: 'Raleway', sans-serif;
+    font-size: clamp(9px, 2vw, 12px);
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.55em;
+    font-weight: 200;
+    margin-top: 16px;
+    text-transform: lowercase;
+    animation: fadeUp 2s ease 0.4s both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .socials {
+    position: fixed;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    animation: fadeUp 2.5s ease 1s both;
+  }
+  .btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.6);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .btn svg {
+    width: 14px; height: 14px;
+    fill: currentColor;
+    flex-shrink: 0;
+  }
+  .btn:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.3);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .btn.fb:hover  { border-color: rgba(24,119,242,0.6); color: #4a90ff; }
+  .btn.tg:hover  { border-color: rgba(38,160,220,0.6); color: #4bbfe8; }
+  .btn.em:hover  { border-color: rgba(220,80,60,0.6);  color: #ff6644; }
+
+  @media (max-width: 420px) {
+    .socials { gap: 8px; bottom: 24px; }
+    .btn { padding: 9px 14px; font-size: 10px; gap: 6px; }
+    .btn span { display: none; }
+    .btn svg { width: 16px; height: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="c"></canvas>
+
+<div class="content">
+  <div class="name">BHAU</div>
+  <div class="sub">siambhau &nbsp;·&nbsp; creator &nbsp;·&nbsp; developer</div>
+</div>
+
+<div class="socials">
+  <a class="btn fb" href="https://facebook.com/SiamBhau69" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+    <span>Facebook</span>
+  </a>
+  <a class="btn tg" href="https://t.me/SiamBhau" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+    <span>Telegram</span>
+  </a>
+  <a class="btn em" href="mailto:siambhau@gmail.com">
+    <svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+    <span>E-mail</span>
+  </a>
+</div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+let W, H;
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// ── Pointer tracking ───────────────────────────────────────────
+const ptr = { x: 0, y: 0, px: 0, py: 0, active: false };
+
+function startAt(x, y) {
+  ptr.px = x; ptr.py = y;
+  ptr.x  = x; ptr.y  = y;
+  ptr.active = true;
+}
+function moveTo(x, y) {
+  if (!ptr.active) return;
+  ptr.px = ptr.x; ptr.py = ptr.y;
+  ptr.x  = x;     ptr.y  = y;
+  const dx = x - ptr.px;
+  const dy = y - ptr.py;
+  const dist = Math.sqrt(dx*dx + dy*dy);
+  if (dist < 1) return;
+  // Spawn multiple particles along this segment for smooth trail
+  const count = Math.min(Math.ceil(dist * 0.6), 14);
+  for (let i = 0; i < count; i++) {
+    const t = i / count;
+    spawnParticle(
+      ptr.px + dx * t,
+      ptr.py + dy * t,
+      dx, dy
+    );
+  }
+}
+function endDrag() { ptr.active = false; }
+
+canvas.addEventListener('mousedown',  e => startAt(e.clientX, e.clientY));
+canvas.addEventListener('mousemove',  e => moveTo(e.clientX, e.clientY));
+canvas.addEventListener('mouseup',    endDrag);
+canvas.addEventListener('mouseleave', endDrag);
+canvas.addEventListener('touchstart', e => {
+  e.preventDefault();
+  const t = e.touches[0];
+  startAt(t.clientX, t.clientY);
+}, { passive: false });
+canvas.addEventListener('touchmove', e => {
+  e.preventDefault();
+  const t = e.touches[0];
+  moveTo(t.clientX, t.clientY);
+}, { passive: false });
+canvas.addEventListener('touchend',   endDrag);
+canvas.addEventListener('touchcancel',endDrag);
+
+// ── Particle pool ──────────────────────────────────────────────
+const particles = [];
+const MAX = 2000;
+
+function spawnParticle(x, y, dx, dy) {
+  if (particles.length >= MAX) return;
+
+  const dragAngle = Math.atan2(dy, dx);
+  // Particles spray perpendicular to drag — both sides — creating the spiral wing effect
+  const side   = Math.random() < 0.5 ? 1 : -1;
+  const fan    = (Math.random() * 0.7 + 0.15) * side;   // 0.15–0.85 off perpendicular
+  const angle  = dragAngle + Math.PI * 0.5 * fan;
+  const speed  = 0.6 + Math.random() * 2.4;
+
+  particles.push({
+    x, y,
+    vx: Math.cos(angle) * speed,
+    vy: Math.sin(angle) * speed * 0.72,
+    curl:   side * (0.012 + Math.random() * 0.04),  // curve inward = spiral
+    drag:   0.985 + Math.random() * 0.01,
+    life:   0,
+    maxLife: 90 + Math.random() * 240,
+    size:   0.5 + Math.random() * 1.8,
+    hue:    Math.random() * 38,   // red→orange
+  });
+}
+
+let orbAlpha = 0;
+
+function loop() {
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.fillStyle = 'rgba(0,0,7,0.15)';
+  ctx.fillRect(0, 0, W, H);
+
+  orbAlpha += ptr.active ? 0.1 : -0.07;
+  orbAlpha  = Math.max(0, Math.min(1, orbAlpha));
+
+  ctx.globalCompositeOperation = 'lighter';
+
+  for (let i = particles.length - 1; i >= 0; i--) {
+    const p = particles[i];
+    p.life++;
+    const t = p.life / p.maxLife;
+
+    // Alpha fade in/out
+    let alpha;
+    if      (t < 0.08) alpha = t / 0.08;
+    else if (t > 0.65) alpha = (1 - t) / 0.35;
+    else               alpha = 1;
+
+    // Curl: rotate velocity vector
+    const spd   = Math.sqrt(p.vx*p.vx + p.vy*p.vy) * p.drag;
+    const angle = Math.atan2(p.vy, p.vx) + p.curl;
+    p.vx = Math.cos(angle) * spd;
+    p.vy = Math.sin(angle) * spd;
+    p.x += p.vx;
+    p.y += p.vy;
+
+    if (p.life >= p.maxLife) { particles.splice(i, 1); continue; }
+
+    const lum = 42 + (1 - t) * 32;
+    ctx.shadowBlur  = 9;
+    ctx.shadowColor = `hsla(${p.hue},100%,60%,${alpha * 0.55})`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle   = `hsla(${p.hue},95%,${lum}%,${alpha})`;
+    ctx.fill();
+  }
+
+  // Orb glow at pointer
+  if (orbAlpha > 0) {
+    const x = ptr.x, y = ptr.y, a = orbAlpha;
+    const halo = ctx.createRadialGradient(x, y, 0, x, y, 55);
+    halo.addColorStop(0,    `rgba(255,180,80,${0.75*a})`);
+    halo.addColorStop(0.25, `rgba(255,80,20,${0.45*a})`);
+    halo.addColorStop(0.7,  `rgba(160,10,0,${0.1*a})`);
+    halo.addColorStop(1,    'rgba(0,0,0,0)');
+    ctx.beginPath();
+    ctx.arc(x, y, 55, 0, Math.PI * 2);
+    ctx.fillStyle = halo;
+    ctx.fill();
+
+    ctx.shadowBlur  = 22;
+    ctx.shadowColor = `rgba(255,160,60,${a})`;
+    ctx.beginPath();
+    ctx.arc(x, y, 4.5, 0, Math.PI * 2);
+    ctx.fillStyle   = `rgba(255,230,180,${a})`;
+    ctx.fill();
+    ctx.shadowBlur  = 0;
+  }
+
+  ctx.globalCompositeOperation = 'source-over';
+  requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+</body>
+</html>
